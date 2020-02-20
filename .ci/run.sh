@@ -11,11 +11,6 @@ PYTHON=${PYTHON:-"python3.7"}
 TEMP_DIRS=()
 
 function run_plugin() {
-  # Create a virtualenv
-  venv_dir="$(mktemp -d)"
-  TEMP_DIRS+=("${venv_dir}")
-  "${PYTHON}" -m venv "${venv_dir}"
-  source "${venv_dir}/bin/activate"
   "${PYTHON}" -m pip install -U pip twine
 
   "${PYTHON}" -m pip install -U "${SRC_ROOT}"
@@ -28,7 +23,7 @@ function run_plugin() {
   PACKAGE_NAME=$(dffml service dev setuppy kwarg name setup.py)
   "${PYTHON}" -m pip install -e .
   "${PYTHON}" setup.py test
-  "${PYTHON}" -m pip uninstall -y "${PACKAGE_NAME}"
+  # "${PYTHON}" -m pip uninstall -y "${PACKAGE_NAME}"
   cd -
 
   if [ "x${PLUGIN}" = "x." ]; then
@@ -61,8 +56,6 @@ function run_plugin() {
     "${PYTHON}" -m unittest discover
     cd "${SRC_ROOT}"
 
-    # Deactivate venv
-    deactivate
 
     # Create the docs
     "${PYTHON}" -m pip install -U -e "${SRC_ROOT}[dev]"
