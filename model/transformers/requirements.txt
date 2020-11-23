@@ -1,7 +1,7 @@
 tensorflow>=2.0.0
 pandas>=0.25.0
 # See https://github.com/intel/dffml/issues/816
-numpy>=1.16.4,<1.19.0
+numpy==1.18.5
 seqeval>=0.0.12
 fastprogress>=0.2.2
 # See https://github.com/intel/dffml/issues/844
